@@ -4,6 +4,8 @@ import Post from '../models/post_model';
 export const createPost = (req, res) => {
   const post = new Post();
   post.title = req.body.title;
+  post.tags = req.body.tags;
+  post.content = req.body.content;
   post.save()
   .then(result => {
     res.json({ message: 'Post created!' });
@@ -12,15 +14,62 @@ export const createPost = (req, res) => {
     res.json({ error });
   });
 };
+
+const cleanPosts = (posts) => {
+  return posts.map(post => {
+    return { id: post._id, title: post.title, tags: post.tags };
+  });
+};
+
+const cleanPost = (post) => {
+  return { id: post._id, title: post.title, tags: post.tags };
+};
+
 export const getPosts = (req, res) => {
-  res.send('posts should be returned');
+  Post.find()
+    .then(allPosts => {
+      res.json(cleanPosts(allPosts));
+    })
+  .catch(error => {
+    res.json({ error });
+  });
 };
+
+
 export const getPost = (req, res) => {
-  res.send('single post looked up');
+  Post.findbyID({ _id: req.params.id })
+    .then(post => {
+      res.json(cleanPost(post));
+    })
+  .catch(error => {
+    res.json({ error });
+  });
 };
+
+
 export const deletePost = (req, res) => {
-  res.send('delete a post here');
+  const currentPost = { _id: req.params.id };
+  Post.remove(currentPost)
+  .then(result => {
+    res.json({ message: 'Post deleted!' });
+  })
+  .catch(error => {
+    res.json({ error });
+  });
 };
+
+
 export const updatePost = (req, res) => {
-  res.send('update a post here');
+  const currentPost = { _id: req.params.id };
+  Post.update(currentPost, {
+    title: req.body.title,
+    tags: req.body.tags,
+    content: req.body.content,
+  })
+  .then(result => {
+    res.json({ message: 'Post updated!' });
+  })
+  .catch(error => {
+    res.json({ error });
+  });
 };
