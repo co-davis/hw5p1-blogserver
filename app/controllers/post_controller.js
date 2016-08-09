@@ -37,7 +37,7 @@ export const getPosts = (req, res) => {
 
 
 export const getPost = (req, res) => {
-  Post.findByID({ _id: req.params.id })
+  Post.findById({ _id: req.params.id })
     .then(post => {
       res.json(cleanPost(post));
     })
