@@ -17,12 +17,12 @@ export const createPost = (req, res) => {
 
 const cleanPosts = (posts) => {
   return posts.map(post => {
-    return { id: post._id, title: post.title, tags: post.tags };
+    return { id: post._id, title: post.title, tags: post.tags, content: post.content };
   });
 };
 
 const cleanPost = (post) => {
-  return { id: post._id, title: post.title, tags: post.tags };
+  return { id: post._id, title: post.title, tags: post.tags, content: post.content };
 };
 
 export const getPosts = (req, res) => {
