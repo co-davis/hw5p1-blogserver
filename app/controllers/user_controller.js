@@ -14,6 +14,7 @@ export const signin = (req, res, next) => {
 
 export const signup = (req, res, next) => {
   const email = req.body.email;
+  const username = req.body.username;
   const password = req.body.password;
 
   if (!email || !password) {
@@ -32,6 +33,7 @@ export const signup = (req, res, next) => {
       if (!user) {
         const newUser = new User();
         newUser.email = email;
+        newUser.username = username;
         newUser.password = password;
         newUser.save()
           .then(() => {

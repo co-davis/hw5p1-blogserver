@@ -4,6 +4,7 @@ import Post from '../models/post_model';
 export const createPost = (req, res) => {
   const post = new Post();
   post.title = req.body.title;
+  post.author = req.user._id;
   post.tags = req.body.tags;
   post.content = req.body.content;
   post.save()
@@ -38,6 +39,7 @@ export const getPosts = (req, res) => {
 
 export const getPost = (req, res) => {
   Post.findById({ _id: req.params.id })
+    .populate('author')
     .then(post => {
       res.json(cleanPost(post));
     })
