@@ -41,7 +41,9 @@ export const getPost = (req, res) => {
   Post.findById({ _id: req.params.id })
     .populate('author')
     .then(post => {
-      res.json(cleanPost(post));
+      // res.json(cleanPost(post));
+      res.json(post);
+      console.log(post);
     })
   .catch(error => {
     res.json({ error });
