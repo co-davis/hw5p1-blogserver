@@ -22,10 +22,6 @@ const cleanPosts = (posts) => {
   });
 };
 
-const cleanPost = (post) => {
-  return { id: post._id, title: post.title, tags: post.tags, content: post.content };
-};
-
 export const getPosts = (req, res) => {
   Post.find()
     .then(allPosts => {
